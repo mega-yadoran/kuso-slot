@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>スロットマシーン</title>
+  <title>スロット目押し力判定器</title>
   <style>
     body {
       margin: 0;
@@ -40,7 +40,7 @@
       margin: 0 10px;
       /* ボタン間に適度なスペース */
       padding: 10px;
-      font-size: 14px;
+      font-size: 21px;
       vertical-align: middle;
       text-align: center;
     }
@@ -48,8 +48,20 @@
     @media (max-width: 600px) {
       .controls button {
         padding: 8px;
+        font-size: 14px;
         margin: 0 5px;
       }
+    }
+
+    #result {
+      text-align: center;
+      font-size: 24px;
+      margin: 40px 20px 0;
+    }
+    #result button {
+      margin: 20px auto;
+      padding: 10px 20px;
+      font-size: 14px;
     }
   </style>
 </head>
@@ -58,9 +70,16 @@
   <h1>🎉を狙え！！！</h1>
     <canvas id="slotCanvas" width="600" height="400"></canvas>
   <div class="controls">
-    <button onclick="stopReel(0)">リール1停止</button>
-    <button onclick="stopReel(1)">リール2停止</button>
-    <button onclick="stopReel(2)">リール3停止</button>
+    <button onclick="stopReel(0)">ストップ</button>
+    <button onclick="stopReel(1)">ストップ</button>
+    <button onclick="stopReel(2)">ストップ</button>
+  </div>
+  <div id="result" hidden>
+    <div id="result-text">
+      惜しいけど外れ～～ｗｗｗ
+    </div>
+    <button onclick="tweet()">Xにポスト</button>
+    <button onclick="location.reload()">もう一回</button>
   </div>
   <script src="slotMachine.js"></script>
 </body>

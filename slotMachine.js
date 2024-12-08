@@ -2,6 +2,7 @@ const canvas = document.getElementById("slotCanvas");
 const ctx = canvas.getContext("2d");
 
 let reelWidth = 150;
+let diff = 999;
 
 // ウィンドウリサイズ時や初期ロード時にキャンバスサイズを更新する関数
 function resizeCanvas() {
@@ -89,9 +90,10 @@ function draw() {
     }
   }
 
-  // 全てのリールが停止している場合、赤い線を引く処理
+  // 全てのリールが停止している場合、結果を表示
   if (!isSpinning.some((spinning) => spinning)) {
-    highlightMatchingSymbols();
+    const diff = highlightMatchingSymbols();
+    showResult(diff);
   }
 
   requestAnimationFrame(draw);
@@ -105,6 +107,8 @@ function stopReel(index) {
 // 🎉の絵柄に水平線を引く
 function highlightMatchingSymbols() {
   const highlightedSymbol = symbols[0][0];
+  let min = 400;
+  let max = -400;
 
   // 水平線を描画
   for (let i = 0; i < reelCount; i++) {
@@ -121,9 +125,6 @@ function highlightMatchingSymbols() {
           : symbolIndex >= symbolCount
           ? symbolIndex - symbolCount
           : symbolIndex;
-      console.log(
-        `${correctedIndex}, ${symbols[i][correctedIndex]}, ${highlightedSymbol}`
-      );
 
       // 同じ絵柄の場合、線を引く
       if (symbols[i][correctedIndex] === highlightedSymbol) {
@@ -131,6 +132,9 @@ function highlightMatchingSymbols() {
           j * symbolHeight -
           (reels[i].position % symbolHeight) +
           symbolHeight / 2;
+
+        min = Math.min(min, y);
+        max = Math.max(max, y);
 
         // 赤い線をキャンバス全体に引く
         ctx.beginPath();
@@ -142,6 +146,38 @@ function highlightMatchingSymbols() {
       }
     }
   }
+  return max - min;
+}
+
+function showResult(diff) {
+  const resultText = document.getElementById("result-text");
+  if (diff === 0) {
+    resultText.textContent = "すごすぎワロタｗｗｗｗｗｗ";
+  } else if (diff < 20) {
+    resultText.textContent = "惜しいけどズレてるのでダメで～～すｗｗｗ";
+  } else if (diff < 100) {
+    resultText.textContent = "ぴったり揃えないとダメなんだな～～～～ｗｗｗｗｗ";
+  } else {
+    resultText.textContent = "「🎉を狙え」って書いてるの読んだ？";
+  }
+  const result = document.getElementById("result");
+  if (result.attributes.getNamedItem("hidden") !== null) {
+    result.attributes.removeNamedItem("hidden");
+  }
+}
+
+function tweet() {
+  const br = "%0D%0A";
+  const text =
+    diff === 0
+      ? "スロット目押し力判定：「神」"
+      : diff < 20
+      ? "スロット目押し力判定：「凡人」"
+      : diff < 100
+      ? "スロット目押し力判定：「凡人以下」"
+      : "スロット目押し力判定：「やる気なし」";
+  const url = `https://twitter.com/intent/tweet?text=${text}${br}${br}https://mega-yadoran.github.io/kuso-slot/${br}&hashtags=スロット目押し力判定器`;
+  window.open(url, "_blank");
 }
 
 // ウィンドウリサイズ時にキャンバスサイズ更新
