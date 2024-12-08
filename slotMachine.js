@@ -19,11 +19,11 @@ function resizeCanvas() {
   ctx.scale(dpr, dpr);
 
   // リール描画用のフォント
-  ctx.font = "bold " + (80 / dpr) * (dpr > 1 ? 1.2 : 1) + "px Arial";
+  ctx.font = "bold " + (80 / dpr) * (dpr > 1 ? 1.5 : 1) + "px Arial";
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
 
-  reelWidth = (150 / dpr) * (dpr > 1 ? 1 : 1);
+  reelWidth = (150 / dpr) * (dpr > 1 ? 1.2 : 1);
 
   // サイズ変更後に描画
   draw();
