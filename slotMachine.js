@@ -1,8 +1,35 @@
 const canvas = document.getElementById("slotCanvas");
 const ctx = canvas.getContext("2d");
 
+let reelWidth = 150;
+
+// ウィンドウリサイズ時や初期ロード時にキャンバスサイズを更新する関数
+function resizeCanvas() {
+  // 現在表示中のサイズを取得
+  const rect = canvas.getBoundingClientRect();
+
+  // 高解像度対応（オプション）：デバイスピクセル比
+  const dpr = window.devicePixelRatio || 1;
+
+  // 表示領域に合わせてcanvasの内部解像度を再設定
+  canvas.width = rect.width * dpr;
+  canvas.height = rect.height * dpr;
+
+  // コンテキストをスケーリング（高解像度対応）
+  ctx.scale(dpr, dpr);
+
+  // リール描画用のフォント
+  ctx.font = "bold " + (80 / dpr) * (dpr > 1 ? 1.2 : 1) + "px Arial";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+
+  reelWidth = (150 / dpr) * (dpr > 1 ? 1 : 1);
+
+  // サイズ変更後に描画
+  draw();
+}
+
 // リールの設定
-const reelWidth = 150;
 const reelHeight = 400;
 const reelCount = 3;
 const symbolHeight = 100;
@@ -21,18 +48,13 @@ let isSpinning = [true, true, true];
 // リールの初期化
 for (let i = 0; i < reelCount; i++) {
   reels.push({
-    position: Math.floor(Math.random() * symbolCount * symbolHeight),
+    position: Math.floor(Math.random() * symbolCount) * symbolHeight,
   });
 }
 
 // キャンバス全体の中央にリールを配置
 const totalReelsWidth = reelWidth * reelCount;
 const offsetX = (canvas.width - totalReelsWidth) / 2;
-
-// リール描画用のフォント
-ctx.font = "bold 80px Arial";
-ctx.textAlign = "center";
-ctx.textBaseline = "middle";
 
 // リールを回転させる
 function draw() {
@@ -122,5 +144,9 @@ function highlightMatchingSymbols() {
   }
 }
 
-// 描画開始
-draw();
+// ウィンドウリサイズ時にキャンバスサイズ更新
+window.addEventListener("resize", resizeCanvas);
+
+// 初期ロード時にキャンバスサイズを更新
+// ここで一度リサイズして描画を行う
+resizeCanvas();

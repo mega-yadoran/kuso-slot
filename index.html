@@ -11,14 +11,20 @@
       padding: 0;
     }
 
+    h1 {
+      text-align: center;
+      margin: 20px 0;
+    }
+
     /* canvasは中央寄せ */
     canvas {
       display: block;
+      max-width: 95%;
+      height: auto;
       margin: 20px auto;
-      background: #ddd;
       border: 2px solid #333;
+      background: #ddd;
     }
-
     /* ボタンを中央揃え */
     .controls {
       text-align: center;
@@ -49,6 +55,7 @@
 </head>
 
 <body>
+  <h1>🎉を狙え！！！</h1>
     <canvas id="slotCanvas" width="600" height="400"></canvas>
   <div class="controls">
     <button onclick="stopReel(0)">リール1停止</button>
