@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>スロットマシーン</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    /* canvasは中央寄せ */
+    canvas {
+      display: block;
+      margin: 20px auto;
+      background: #ddd;
+      border: 2px solid #333;
+    }
+
+    /* ボタンを中央揃え */
+    .controls {
+      text-align: center;
+      /* 子要素のインラインブロックを中央揃え */
+      margin-top: 10px;
+      width: 100%;
+      /* 画面幅いっぱいに広げる */
+    }
+
+    .controls button {
+      display: inline-block;
+      /* インラインブロックで横並び可能 */
+      margin: 0 10px;
+      /* ボタン間に適度なスペース */
+      padding: 10px;
+      font-size: 14px;
+      vertical-align: middle;
+      text-align: center;
+    }
+
+    @media (max-width: 600px) {
+      .controls button {
+        padding: 8px;
+        margin: 0 5px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+    <canvas id="slotCanvas" width="600" height="400"></canvas>
+  <div class="controls">
+    <button onclick="stopReel(0)">リール1停止</button>
+    <button onclick="stopReel(1)">リール2停止</button>
+    <button onclick="stopReel(2)">リール3停止</button>
+  </div>
+  <script src="slotMachine.js"></script>
+</body>
+
+</html>
