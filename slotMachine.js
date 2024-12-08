@@ -92,8 +92,8 @@ function draw() {
 
   // 全てのリールが停止している場合、結果を表示
   if (!isSpinning.some((spinning) => spinning)) {
-    const diff = highlightMatchingSymbols();
-    showResult(diff);
+    diff = highlightMatchingSymbols();
+    showResult();
   }
 
   requestAnimationFrame(draw);
@@ -149,7 +149,7 @@ function highlightMatchingSymbols() {
   return max - min;
 }
 
-function showResult(diff) {
+function showResult() {
   const resultText = document.getElementById("result-text");
   if (diff === 0) {
     resultText.textContent = "すごすぎワロタｗｗｗｗｗｗ";
